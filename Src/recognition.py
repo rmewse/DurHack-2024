@@ -1,6 +1,5 @@
 import cv2
 import numpy as np
-import streamlit
 import subprocess # Used to run another python file
 
 # Initialize the camera
@@ -87,6 +86,7 @@ while True:
         key = cv2.waitKey(1)
         if key == 13:  # 13 is the ASCII code for Enter
             print("Enter key pressed! Performing action...") 
+            subprocess.Popen(["streamlit", "run", "../quiz.py"])
             # Here you can add the action you want to perform
             # For example, you might want to move to the next question, save data, etc.
             # You can also break the loop if you want to stop the video capture.
@@ -95,8 +95,6 @@ while True:
         # Press 'q' to exit the loop
         if cv2.waitKey(1) == ord('q'): 
             break
-        elif cv2.waitKey(1) == 32:
-            subprocess.run(["python", "../quiz.py"])
     except:
         pass
 
