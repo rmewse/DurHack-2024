@@ -1,4 +1,5 @@
 import cv2
+import numpy as np
 
 # Initialize the camera
 cam = cv2.VideoCapture(0)
@@ -10,6 +11,8 @@ frame_height = int(cam.get(cv2.CAP_PROP_FRAME_HEIGHT))
 # Define the codec and create VideoWriter object
 fourcc = cv2.VideoWriter_fourcc(*'mp4v')
 out = cv2.VideoWriter('output.mp4', fourcc, 20.0, (frame_width, frame_height))
+
+print(str(frame_width) + " " + str(frame_height))
 
 # Load the Haar Cascade for face detection
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
@@ -45,6 +48,35 @@ while True:
     if largest_face != None:
         x,y,w,h = largest_face
         cv2.rectangle(flipped_frame, (x, y), (x + w, y + h), (100,84,48), 5)  # Draw blue rectangle
+
+        # Add text above the rectangle when a face is recognized
+        cv2.putText(flipped_frame, "Smile! Then, Press Enter To Continue!", (x, y - 10), 
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2, cv2.LINE_AA)
+        
+        # Create a background for the text
+        text = "Smile! Then, Press Enter To Continue!"
+        text_size = cv2.getTextSize(text, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)[0]
+
+        # Background rectangle coordinates
+        background_x1 = x
+        background_y1 = y - text_size[1] - 10  # 10 pixels above the text
+        background_x2 = x + text_size[0]
+        background_y2 = y
+        
+        # Create a blue background with some padding
+        text_background = np.zeros((text_size[1] + 10, text_size[0] + 10, 3), dtype=np.uint8)
+        text_background[:] = (100,84,48)  # Blue background (BGR format)
+
+
+        # Draw the background rectangle
+        cv2.rectangle(flipped_frame, (background_x1, background_y1), (background_x2, background_y2), (100,84,48), cv2.FILLED)
+
+        text_x = x + (text_size[0] // 2) - (background_x1 + 5)
+        text_y = y - 5
+        
+        # Add the text on top of the background
+        cv2.putText(flipped_frame, text, (x, y - 10), 
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2, cv2.LINE_AA)
 
 
     # Write the frame with detected faces to the output file
