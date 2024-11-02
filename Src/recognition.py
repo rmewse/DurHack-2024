@@ -2,6 +2,10 @@ import cv2
 import numpy as np
 import subprocess # Used to run another python file
 
+
+# Makes sure the form cannot be opend twice
+opened = False
+
 # Initialize the camera
 cam = cv2.VideoCapture(0)
 
@@ -85,12 +89,15 @@ while True:
         # Press 'Enter' key to perform an action
         key = cv2.waitKey(1)
         if key == 13:  # 13 is the ASCII code for Enter
-            print("Enter key pressed! Performing action...") 
-            subprocess.Popen(["streamlit", "run", "../quiz.py"])
-            # Here you can add the action you want to perform
-            # For example, you might want to move to the next question, save data, etc.
-            # You can also break the loop if you want to stop the video capture.
-            # break  # Uncomment if you want to stop the loop on Enter
+            if (opened == False):
+                print("Enter key pressed! Performing action...") 
+                subprocess.Popen(["streamlit", "run", "../quiz.py"])
+                opened = True
+            
+                # Here you can add the action you want to perform
+                # For example, you might want to move to the next question, save data, etc.
+                # You can also break the loop if you want to stop the video capture.
+                # break  # Uncomment if you want to stop the loop on Enter
 
         # Press 'q' to exit the loop
         if cv2.waitKey(1) == ord('q'): 
