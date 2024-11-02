@@ -8,6 +8,13 @@ opened = False
 # Initialize the camera
 cam = cv2.VideoCapture(0)
 
+# Used for hand recog
+previous_center = None
+
+# Define the range for hand color detection in HSV
+lower_colour = np.array([0, 50, 50])    # Adjust to match your color
+upper_colour = np.array([10, 255, 255])
+
 # Get frame dimensions
 frame_width = int(cam.get(cv2.CAP_PROP_FRAME_WIDTH))
 frame_height = int(cam.get(cv2.CAP_PROP_FRAME_HEIGHT))
@@ -32,6 +39,32 @@ while True:
             break
         
         flipped_frame = cv2.flip(frame, 1)
+        
+        if opened == True:
+            # Used for hand tracking
+            hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+            mask = cv2.inRange(hsv, lower_colour, upper_colour)
+        
+            # Find contours in the mask
+            contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+            
+            # Find the biggest hand, only recognise one hand
+            if contours:
+                # Largest hand
+                largest_hand = max(contours, key=cv2.contourArea)
+                
+                x,y,w,h = cv2.boundingRect(largest_hand)
+                
+                current_center = (x + w // 2, y + h // 2) # Find the center of the hand box
+                
+                gesture = recog_gesture(previous_center,current_center)
+                
+                previous_center = current_center # Update centers to track movement
+                
+                print(gesture)
+                
+                
+
 
         # Convert the frame to grayscale for face detection
         gray = cv2.cvtColor(flipped_frame, cv2.COLOR_BGR2GRAY)
