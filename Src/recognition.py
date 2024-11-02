@@ -11,12 +11,12 @@ out = cv2.VideoWriter('output.mp4', fourcc, 20.0, (frame_width, frame_height))
 
 while True:
     ret, frame = cam.read()
-    
+    flipped_frame = cv2.flip(frame,1)
     # Write the frame to the output file
-    out.write(frame)
+    out.write(flipped_frame)
 
     # Display the captured frame
-    cv2.imshow('Camera', frame)
+    cv2.imshow('Camera', flipped_frame)
 
     # Press 'q' to exit the loop
     if cv2.waitKey(1) == ord('q'):
