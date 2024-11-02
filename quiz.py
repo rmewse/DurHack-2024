@@ -84,10 +84,6 @@ def quiz_app(question_list):
             number_placeholder = st.empty()
             question_placeholder = st.empty()
             options_placeholder = st.empty()
-            optionA= st.button()
-            optionB= st.button()
-            optionC= st.button()
-            optionD= st.button()
             results_placeholder = st.empty()
             expander_area = st.empty()
             current_question=i+1
@@ -95,7 +91,14 @@ def quiz_app(question_list):
             number_placeholder.write(f"*Question {current_question}*")
             question_placeholder.write(question['question'])
             for option in question['options']:
-                options_placeholder.write(option)
+                if question['options'].index(option)==0:
+                    optionA= st.button(option)
+                elif question['options'].index(option)==1:
+                    optionB= st.button(option)
+                elif question['options'].index(option)==2:
+                    optionC= st.button(option)
+                elif question['options'].index(option)==3:
+                    optionD= st.button(option)
             i+=1
 
 
