@@ -85,6 +85,9 @@ def quiz_app(question_list):
             question_placeholder = st.empty()
             options_placeholder = st.empty()
             optionA= st.button()
+            optionB= st.button()
+            optionC= st.button()
+            optionD= st.button()
             results_placeholder = st.empty()
             expander_area = st.empty()
             current_question=i+1
