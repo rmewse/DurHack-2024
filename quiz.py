@@ -8,46 +8,31 @@
 import csv
 import streamlit as st
 import pandas as pd
-st.write("Hello World")
 
-print('1')
 
-#! need to change
-def create_question_list(question_file):
-    question_data=[]
-    #open file in read mode
-    with open(question_file,'r') as file:
-        #read file in dictionary format
-        csv_reader = csv.DictReader(file, delimiter=';')
-        for row in csv_reader:
-            print("hi")
-            print(row)
-            new_question={}
-            new_question['question']=row["Question"],
-            new_question['options']= [row["Option A"], row["Option B"], row["Option C"], row["Option D"]]
-            question_data.append(new_question)
-    return question_data
 
-def c1(file_path):
-    questions = []
-    with open(file_path, 'r') as file:
-        reader = csv.DictReader(file, delimiter=';')
-        for row in reader:
-            question = {
-                'question': row['Question'],
-                'options': [
-                    row['Option A'],
-                    row['Option B'],
-                    row['Option C'],
-                    row['Option D']
-                ]
-            }
-            questions.append(question)
-    return questions
-    
 
-question_file='Assets/DinoQuestions.csv'
-question_list=c1(question_file)
+question_list = [
+    {"question": "What is your favourite continent?",
+     "options": ["Africa", "Europe", "Australia", "Antarctica"]},
+    {"question": "How long are your arms?",
+     "options": ["Weirdly Short", "Average", "Not Quite Average", "Very long"]},
+    {"question": "What is your favourite food?",
+     "options": ["Steak", "Salad", "Chicken Salad", "Fruits"]},
+    {"question": "Choose an animal",
+     "options": ["Shark", "Bird", "Cheetah", "Rhinoceros"]},
+    {"question": "What best describes you?",
+     "options": ["Relaxed", "Intelligent", "Competitive", "Stressed"]},
+    {"question": "How do you spend your weekends?",
+     "options": ["Clubbing", "Sleeping", "Reading", "Working"]},
+    {"question": "What genre of music do you listen to?",
+     "options": ["Classical", "Indie", "Rock", "Rap"]},
+    {"question": "What is most important to you?",
+     "options": ["Love", "Loyalty", "Money", "Health"]},
+    {"question": "What type of zodiac sign are you?",
+     "options": ["Earth", "Fire", "Water", "Air"]}
+]
+
 #!need to rewrite 
 def image(question):
     client_id = "4Vwaw-8lwS3_QfivsLzQNvWsRhKyjiTNMXsqJ2OS7ao"
@@ -91,7 +76,7 @@ def image(question):
 
 #following function adapted from https://medium.com/@fesomade.alli/building-a-quiz-app-in-python-using-streamlit-d7c1aab4d690
 # Function to display a question
-def quiz_app():
+def quiz_app(question_list):
     # create container
     with st.container():
         i=0
@@ -99,12 +84,13 @@ def quiz_app():
             number_placeholder = st.empty()
             question_placeholder = st.empty()
             options_placeholder = st.empty()
+            optionA= st.button()
             results_placeholder = st.empty()
             expander_area = st.empty()
             current_question=i+1
             question_content=question['question'].strip('""')
             number_placeholder.write(f"*Question {current_question}*")
-            question_placeholder.write(f"question_content")
+            question_placeholder.write(question['question'])
             for option in question['options']:
                 options_placeholder.write(option)
             i+=1
