@@ -7,6 +7,8 @@ opened = False
 
 # Initialize the camera
 cam = cv2.VideoCapture(0)
+cam.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
 # Used for hand recog
 previous_center = None

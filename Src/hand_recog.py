@@ -27,4 +27,4 @@ def recog_gesture(prev_center, cur_center):
             return "Up"
         
     # If none of the conditions for direction recognition
-    return none
+    return None
