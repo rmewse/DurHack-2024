@@ -15,6 +15,15 @@ screen_width, screen_height=1200,700
 global screen
 screen = pygame.display.set_mode((screen_width, screen_height), pygame.SCALED)
 
+global a
+a=0
+global b
+b=0
+global c
+c=0
+global d
+d=0
+
 #colours defined here
 #!colour scheme
 sage_green=(85, 139, 110)
@@ -434,6 +443,16 @@ def quiz():
             time.sleep(2)
             answer_selected=False
             question_number+=1
+
+def end_screen():
+    screen.fill(cream)
+    #image blit
+    #call affirmations
+    
+    #array of results
+    #result blit
+    #music
+    
 
 
 #start screen buttons
