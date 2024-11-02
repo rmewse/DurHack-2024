@@ -93,19 +93,12 @@ while True:
             # break  # Uncomment if you want to stop the loop on Enter
 
         # Press 'q' to exit the loop
-<<<<<<< HEAD
         if cv2.waitKey(1) == ord('q'): 
             break
         elif cv2.waitKey(1) == 32:
             subprocess.run(["python", "../quiz.py"])
     except:
         pass
-=======
-        elif key == ord('q'):
-            break
-    except Exception as e:
-        print(f"Error: {e}")
->>>>>>> refs/remotes/origin/main
 
 # Release the capture and writer objects
 cam.release()
