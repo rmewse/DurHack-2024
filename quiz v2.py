@@ -7,6 +7,7 @@ from PIL import Image
 from io import BytesIO
 import os
 import ast
+import time
 
 pygame.init()
 global screen_width, screen_height
@@ -16,22 +17,22 @@ screen = pygame.display.set_mode((screen_width, screen_height), pygame.SCALED)
 
 #colours defined here
 #!colour scheme
-green=(0, 155, 0)
+sage_green=(85, 139, 110)
 blue=(204, 255, 255)
-black = (0,0,0)
-red =(252,81,48)
-white=(255,255,255)
-dark_blue= (8,127,140)
+dark_green = (10, 33, 15)
+green =(53, 255, 105)
+cream=(238, 229, 233)
+red=(255,0,0)
 
 # create font options
 pygame.font.init()
 #'PressStart2P-vaV7.ttf'
 #!change font
-small_text = pygame.font.Font('PressStart2P-vaV7.ttf', 10)
-medium_text = pygame.font.Font('PressStart2P-vaV7.ttf', 25)
-large_text = pygame.font.Font('PressStart2P-vaV7.ttf', 45)
-option_text = pygame.font.Font('PressStart2P-vaV7.ttf', 15)
-question_text=pygame.font.Font('PressStart2P-vaV7.ttf',20)
+small_text = pygame.font.Font('Atop-R99O3.ttf', 10)
+medium_text = pygame.font.Font('Atop-R99O3.ttf', 25)
+large_text = pygame.font.Font('Atop-R99O3.ttf', 45)
+option_text = pygame.font.Font('Atop-R99O3.ttf', 15)
+question_text=pygame.font.Font('Atop-R99O3.ttf',20)
 # 
 # the following 'drawText' function can be found at https://www.pygame.org/wiki/TextWrap - date of access: 02/11/2024
 # draw some text into an area of a surface
@@ -75,7 +76,9 @@ def drawText(surface, text, color, rect, font, aa=False, bkg=None):
 
 
     return text
-
+global question_number
+question_number=1
+global question_list
 question_list = [
     {"question": "What is your favourite continent?",
      "options": ["Africa", "Europe", "Australia", "Antarctica"]},
@@ -148,7 +151,7 @@ class Button(object):
             pygame.draw.rect(screen, self.colour, rect)
         if self.wrap_text==True:
             rect = pygame.rect.Rect((self.x,self.y),(self.width, self.height))
-            text = drawText(screen, self.msg, black, rect, self.font_size, aa=False, bkg=None)
+            text = drawText(screen, self.msg, dark_green, rect, self.font_size, aa=False, bkg=None)
             if text: #i.e if there is text left over after printing
                 print("Error! The screen was too small for the ", self, "Button")
                 
@@ -163,6 +166,58 @@ class Button(object):
         pygame.draw.rect(screen, self.colour, rect)
         self.colour = colour_copy
 
+    def is_clicked(self):
+        text_surf= (self.font_size).render(self.msg, True, (0, 0, 0))
+        text_width, text_height = text_surf.get_size()
+        if self.width<text_width and self.height<text_height:
+            self.width = text_width+10
+            self.height = text_height+10
+        rect = pygame.rect.Rect((self.x,self.y), (self.width, self.height))
+        mouse_pos = pygame.mouse.get_pos()
+        return rect.collidepoint(mouse_pos)
+
+def image(question):
+
+
+    client_id = "4Vwaw-8lwS3_QfivsLzQNvWsRhKyjiTNMXsqJ2OS7ao"
+    client_secret = ""
+    redirect_uri = ""
+    code = ""
+
+    auth = Auth(client_id, client_secret, redirect_uri, code=code)
+    api = Api(auth)
+    import requests
+    import pygame
+
+    category = str(question)
+    # Fetch image data
+    url = f"https://api.unsplash.com/photos/random?query={category}&orientation=landscape&client_id=4Vwaw-8lwS3_QfivsLzQNvWsRhKyjiTNMXsqJ2OS7ao"
+    data = requests.get(url).json()
+    img_data = requests.get(data["urls"]["regular"]).content
+    
+    #credits
+    user_data = data["user"]
+    name= user_data["name"] + " /unsplash"
+    
+    # Initialize pygame
+    pygame.init()
+
+    # Load image from byte data
+    image = pygame.image.load(BytesIO(img_data))
+    DEFAULT_IMAGE_SIZE = (1000, 375)
+ 
+    # Scale the image to your needed size
+    image = pygame.transform.scale(image, DEFAULT_IMAGE_SIZE)
+
+    # Draw the image to the screen
+    screen.blit(image, (50, 65))
+    
+    
+    #link to photographer's profile
+    links = user_data["links"]
+    profile_link=links["html"]
+    
+    return name, profile_link
 
 def help_screen():
     help_needed=True
@@ -172,7 +227,7 @@ def help_screen():
     initial_screen_copy = screen_surface.copy()
     screen_copy=screen_surface.copy()
     surface_list.append(screen_copy)
-    screen.fill(blue)
+    screen.fill()
     
     #same mechanism as pause function
     help_surface=pygame.Surface((screen_width, screen_height), pygame.SRCALPHA)
@@ -184,11 +239,11 @@ def help_screen():
     screen_number=0
     title="The Basics:"
     #!fill this out!!
-    text = "Use gestures to make choices"
-    welcome_title =Button(20,30,screen_width,screen_height*0.1, blue,title ,True, medium_text, 'x')
+    text = "Use gestures to make choices, but choose carefully... "
+    welcome_title =Button(20,30,screen_width,screen_height*0.1,green ,title ,True, medium_text, 'x')
     welcome_title.draw()
     #welcome message
-    welcome_text= Button(50,150,screen_width-150,screen_height-150, blue, text,True, medium_text, 'n')
+    welcome_text= Button(50,150,screen_width-150,screen_height-150,green , text,True, medium_text, 'n')
     welcome_text.draw()
 
     #back button
@@ -220,7 +275,7 @@ def tutorial_screen():
     initial_screen_copy = screen_surface.copy()
     screen_copy=screen_surface.copy()
     surface_list.append(screen_copy)
-    screen.fill(blue)
+    screen.fill(cream)
     
     #same mechanism as pause function
     help_surface=pygame.Surface((screen_width, screen_height), pygame.SRCALPHA)
@@ -231,13 +286,13 @@ def tutorial_screen():
     #welcome text
     screen_number=0
     #!change this
-    titles_list=["Welcome to EarthSaver:Climate Challenge","1. The Basics:","2. Objectives", "3. Levels:"]
-    text_list = [("This is the ultimate climate change simulator game where you, the newly elected leader, have the power to shape the future of our planet for the next 30 years. Your mission is to make decisions that will help combat climate change, maintain a healthy budget, and save the Earth from environmental disasters."), ("Before you embark on your journey as Earth's leader, you'll take a multiple-choice test to gauge your initial knowledge about climate change. After the game, you'll take the test again to see how much you've learned. You start the game with 100 budget points. Every decision you make costs a certain number of points, so spend wisely! If you run out of budget points, you lose the game."),(" Your goal is to keep the global temperature from rising too high. You can monitor this in the stats bar, alongside sea level rise and the current global temperature. Pay attention to the trends and make decisions to stabilize or reduce the temperature. "),("There are three levels in the game, each containing 10 situations. In each situation, you'll be presented with four options. Choose wisely to ensure a sustainable and safe future for the planet. Top tip: Be cautious! If you choose options that harm the environment, surprise tipping points may occur. These unexpected events will deduct points from your budget, making it even more challenging to achieve your goals. Click next if you're ready to begin!")]
-    #rename vars
-    welcome_title =Button(20,30,screen_width,screen_height*0.1, blue,titles_list[screen_number] ,True, medium_text, 'x')
+    titles_list=["Welcome to Affirmosaurus!"]#!
+    text_list = [("Use the gestures to make your choices. But choose wisely!")]
+
+    welcome_title =Button(20,30,screen_width,screen_height*0.1,green,titles_list[screen_number] ,True, medium_text, 'x')
     welcome_title.draw()
     #welcome message
-    welcome_text= Button(50,150,screen_width-150,screen_height-150, blue, text_list[screen_number],True, medium_text, 'n')
+    welcome_text= Button(50,150,screen_width-150,screen_height-150,green , text_list[screen_number],True, medium_text, 'n')
     welcome_text.draw()
     #next button
     next_button = Button(1000,575, 150, 100, green, "Next", False, medium_text, 'n')
@@ -254,27 +309,11 @@ def tutorial_screen():
                     running = False
                     pygame.quit()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if next_button.is_clicked() and screen_number<3:
-                    screen_surface = pygame.display.get_surface()
-                    screen_copy = screen_surface.copy()
-                    surface_list.append(screen_copy)
-                    help_surface.fill(blue)
-                    welcome_title =Button(20,30,screen_width,screen_height*0.1, blue,titles_list[screen_number+1] ,True, large_text, 'x')
-                    welcome_title.draw()
-                    #welcome message
-                    welcome_text= Button(50,150,screen_width-150,screen_height-150, blue, text_list[screen_number+1],True, medium_text, 'n')
-                    welcome_text.draw()
-                
-                    pygame.display.flip()
-                    if screen_number<3:
-                        screen_number+=1
-                        next_button.draw()
-                elif next_button.is_clicked() and screen_number ==3:
+                if next_button.is_clicked():
                         help_needed=False
-                        screen.fill(blue)
+                        screen.fill(cream)
                         
                 
-
 pause = False
 
 def pause_screen(pause, surface):
@@ -288,13 +327,11 @@ def pause_screen(pause, surface):
         pygame.display.flip()
         
         #help button
-        help_button= Button(300,200,200,100, green, "Help",False, medium_text,'n')
+        help_button= Button(300,200,200,100, sage_green, "Help",False, medium_text,'n')
         help_button.draw()
         
-
-        
         #resume button
-        resume_button = Button(0,380,200,100,dark_blue, "Resume", False, medium_text, 'x')
+        resume_button = Button(0,380,200,100,sage_green, "Resume", False, medium_text, 'x')
         resume_button.draw()
         
         #update the display
@@ -313,4 +350,128 @@ def pause_screen(pause, surface):
         screen.blit(surface, (0,0))
         pygame.display.flip()
 
+def update_answer():
+    pass
 
+def quiz():
+    global question_list
+    global question_number
+    for question in question_list:
+        screen.fill(cream)
+        current_question=question['question']
+        answer_selected=False
+        #Pause Button
+        pause_button = Button ((screen_width*0.85),(screen_height*0.02),120,100,red, "Menu",True, medium_text,'n')
+        pause_button.draw()
+        #question
+        question_content=str(question_number) + ". " + question['question'].strip('""')            
+        #image credits
+        image_credit, link = image(question_content)
+        credit= Button(720,450, 0,0,green, image_credit,False, small_text, 'n')
+        credit.draw()
+        #display the question
+        question_button=Button((screen_width*0.01), (screen_height*0.07), (screen_width),(screen_height*0.15), green, question_content,True, question_text, 'n')
+        question_button.draw()
+        # for each option, print a letter and then the text
+        for option in question['options']:
+            letters=['UP) ','DOWN) ','LEFT) ','RIGHT) '] #ABCD respectively
+            #draw option buttons
+            if question['options'].index(option)==0: #if this is the first option in the list, since lists in python are zero-indexed
+                option_a=Button((screen_width*0.035),(screen_height*0.65),660, 60,green,letters[question['options'].index(option)]+option.strip('"'),True, option_text,'n')
+                option_a.draw()
+            elif question['options'].index(option)==1:
+                option_b=Button((screen_width*0.035),(screen_height*0.74),660,60,green, letters[question['options'].index(option)]+option.strip('"'),True, option_text,'n')
+                option_b.draw()
+            elif question['options'].index(option)==2:
+                option_c=Button((screen_width*0.035),(screen_height*0.83),660,60,green, letters[question['options'].index(option)]+option.strip('"'),True, option_text,'n')
+                option_c.draw()
+            elif question['options'].index(option)==3:
+                option_d=Button((screen_width*0.035),(screen_height*0.92),660,60,green,letters[question['options'].index(option)]+option.strip('"'),True, option_text,'n')
+                option_d.draw()
+            #needed for pause function
+            screen_surface = pygame.display.get_surface()
+            screen_copy = screen_surface.copy()
+        
+        while answer_selected==False:
+            pygame.display.update()
+            for event in pygame.event.get():
+            #quit game
+                if event.type == pygame.QUIT:
+                    running = False
+                    pygame.quit()
+                    if event.key == pygame.K_SPACE:
+                        pass
+                    #block only runs when game isn't paused
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if pause_button.is_clicked():
+                        if pause == False:
+                                pause=True
+                                pause_screen(pause, screen_copy)
+                                # inverts the current state of the boolean variable pause so pause can be toggled
+                                pause=False
+                    #block only runs when game isn't paused
+                if event.type == pygame.MOUSEBUTTONDOWN and not pause:
+                    # Check for mouse click within the text surface area
+                    if credit.is_clicked():
+                        webbrowser.open(link)
+            answer=update_answer()
+            if answer in ['right','left','up','down']:
+                answer_selected=True
+                if answer=='up':
+                    #confirm
+                    a+=1
+                elif answer=='down':
+                    b+=1
+                elif answer=='left':
+                    c+=1
+                elif answer=='right':
+                    d+=1
+        if answer_selected==True:
+            feedback='Great! Next Question...'
+            feedback_display= Button(0,0,500,125,white, feedback,True, medium_text,'c')
+            feedback_display.draw()
+            pygame.display.flip()
+            time.sleep(2)
+            answer_selected=False
+            question_number+=1
+
+
+#start screen buttons
+new_game_button=Button(0,(screen_height*0.87),0,0, green, "Start!",False, large_text,'x')
+help_button= Button((screen_width*0.80),(screen_height*0.1),0,0, green, "Help",False, large_text,'n')
+
+# background image
+screen.fill(cream)
+background=pygame.image.load("dinosaur.jpg")
+background_width,background_height=background.get_size()
+
+#Game title
+title_surf= large_text.render("Affirmosaurus", True, (255, 255, 255))
+title_width, title_height = title_surf.get_size()
+title_rect = title_surf.get_rect()
+title_rect.topleft = ((screen_width - title_width)/2, (screen_height-title_height)/2)
+
+
+#drawing to screen
+screen.blit(background, ((screen_width-background_width)/2, (screen_height-background_height)/2))
+new_game_button.draw()
+help_button.draw()
+screen.blit(title_surf, title_rect)
+           
+                    
+pygame.init()                  
+running = True
+while running:
+    pygame.display.update()
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+                running = False
+                pygame.quit()
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if help_button.is_clicked():
+                help_screen()
+
+            elif new_game_button.is_clicked():
+                tutorial_screen()
+                quiz()
+    
