@@ -2,7 +2,6 @@ import cv2
 import numpy as np
 import subprocess # Used to run another python file
 
-
 # Makes sure the form cannot be opend twice
 opened = False
 
@@ -18,6 +17,10 @@ fourcc = cv2.VideoWriter_fourcc(*'mp4v')
 out = cv2.VideoWriter('output.mp4', fourcc, 20.0, (frame_width, frame_height))
 
 print(str(frame_width) + " " + str(frame_height))
+
+
+# This is the image to be overlayed onto the camera display
+border_img = cv2.resize(cv2.imread("../Assets/border.png", cv2.IMREAD_UNCHANGED),(frame_width,frame_height))
 
 # Load the Haar Cascade for face detection
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
@@ -79,6 +82,17 @@ while True:
         # Add the text on top of the background
         cv2.putText(flipped_frame, text, (x, y - 10), 
                     cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2, cv2.LINE_AA)
+
+        #Overlay the border image (with alpha blending if it has transparency)
+        if border_img.shape[2] == 4:  # Check if the overlay has an alpha channel
+            # Separate the color and alpha channels
+            overlay_rgb = border_img[:, :, :3]
+            overlay_alpha = border_img[:, :, 3] / 255.0
+
+            # Blend the overlay with the frame
+            for c in range(0, 3):
+                flipped_frame[:, :, c] = (overlay_alpha * overlay_rgb[:, :, c] + (1 - overlay_alpha) * flipped_frame[:, :, c])
+
 
         # Write the frame with detected faces to the output file
         out.write(flipped_frame)
