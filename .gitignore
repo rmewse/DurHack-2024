@@ -1,0 +1,62 @@
+<<<<<<< HEAD
+# Byte-compiled / optimized / compiled Python files
+__pycache__/
+*.py[cod]
+*.pyo
+=======
+
+>>>>>>> dc9dd17 (facial recog)
+
+# Virtual environment (if using one for dependencies, including OpenCV)
+.venv/
+env/
+venv/
+
+# Logs and debugging files
+*.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Python environment and package manager files
+*.env
+*.venv
+*.virtualenv
+pip-log.txt
+
+# IDE-specific files (VSCode, PyCharm, Eclipse, etc.)
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.project
+.classpath
+
+# Jupyter Notebook checkpoints (if you're using Jupyter Notebooks for OpenCV)
+.ipynb_checkpoints/
+
+# Build artifacts (for compiled extensions or temporary files)
+build/
+dist/
+*.egg-info/
+
+# Image or Video Output (if you are saving processed frames or video files)
+output_images/
+output_videos/
+*.jpg
+*.png
+*.mp4
+*.avi
+./Src/
+
+# Temporary or backup files
+*.bak
+*.tmp
+*.swp
+**.mp4
+# Other common caches or config files (from machine learning and image processing tools)
+*.h5
+*.csv  # Ignore data files if they are large; otherwise include them if they’re necessary
+*.pb  # Protobuf model files
+*.tfrecord
