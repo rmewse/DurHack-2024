@@ -71,9 +71,6 @@ while True:
 
         # Draw the background rectangle
         cv2.rectangle(flipped_frame, (background_x1, background_y1), (background_x2, background_y2), (100,84,48), cv2.FILLED)
-
-        text_x = x + (text_size[0] // 2) - (background_x1 + 5)
-        text_y = y - 5
         
         # Add the text on top of the background
         cv2.putText(flipped_frame, text, (x, y - 10), 
