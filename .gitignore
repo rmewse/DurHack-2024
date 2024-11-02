@@ -1,7 +1,11 @@
+<<<<<<< HEAD
 # Byte-compiled / optimized / compiled Python files
 __pycache__/
 *.py[cod]
 *.pyo
+=======
+
+>>>>>>> dc9dd17 (facial recog)
 
 # Virtual environment (if using one for dependencies, including OpenCV)
 .venv/
