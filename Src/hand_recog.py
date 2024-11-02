@@ -4,6 +4,7 @@ import numpy as np
 # Function to recognise movement of boxes
 def recog_gesture(prev_center, cur_center):
     """
+    """
     # Check if there is a previous center
     if prev_center is None:
         return None
@@ -14,7 +15,10 @@ def recog_gesture(prev_center, cur_center):
     
     print(str(dx) + " " + str(dy))
     
+    print(str(dx) + " " + str(dy))
+    
     # Threshold for the amount of pixels the hand has to move to be recognised
+    threshold = 50
     threshold = 50
     if abs(dy) < abs(dx): # This is a horizontal movement, we need to distinguish between left/right
         if dx > threshold:
