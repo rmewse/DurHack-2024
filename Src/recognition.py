@@ -109,7 +109,7 @@ while True:
                 
                 # Screenshot the area that is highlighted by blue box
                 face_img = flipped_frame[y:y + h, x:x + w]
-                cv2.imwrite("Assets/face_img_recent.png", face_img)
+                cv2.imwrite("face_img_recent.png", face_img)
                 
                 # Open question form
                 subprocess.Popen(["streamlit", "run", "../quiz.py"])
