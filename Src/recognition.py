@@ -104,7 +104,14 @@ while True:
         key = cv2.waitKey(1)
         if key == 13:  # 13 is the ASCII code for Enter
             if (opened == False):
+                # Testing confirmation
                 print("Enter key pressed! Performing action...") 
+                
+                # Screenshot the area that is highlighted by blue box
+                face_img = flipped_frame[y:y + h, x:x + w]
+                cv2.imwrite("Assets/face_img_recent.png", face_img)
+                
+                # Open question form
                 subprocess.Popen(["streamlit", "run", "../quiz.py"])
                 opened = True
             
