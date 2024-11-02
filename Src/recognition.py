@@ -1,5 +1,7 @@
 import cv2
 import numpy as np
+import streamlit
+import subprocess # Used to run another python file
 
 # Initialize the camera
 cam = cv2.VideoCapture(0)
@@ -84,8 +86,10 @@ while True:
         cv2.imshow('Camera', flipped_frame)
 
         # Press 'q' to exit the loop
-        if cv2.waitKey(1) == ord('q'):
+        if cv2.waitKey(1) == ord('q'): 
             break
+        elif cv2.waitKey(1) == 32:
+            subprocess.run(["python", "../quiz.py"])
     except:
         pass
 
