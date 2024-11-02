@@ -2,13 +2,44 @@ import cv2
 import numpy as np
 import subprocess # Used to run another python file
 
+
+last5dir = []
+
+send_dir = ""
+
+def recog_gesture(prev_center, cur_center):
+    
+    # Check if there is a previous center
+    if prev_center is None:
+        return None
+    
+    # Get movement of hand
+    dx = cur_center[0] - prev_center[0]
+    dy = cur_center[1] - prev_center[1]
+    
+    
+    # Threshold for the amount of pixels the hand has to move to be recognised
+    threshold = 50
+    if abs(dy) < abs(dx): # This is a horizontal movement, we need to distinguish between left/right
+        if dx > threshold:
+            return "Right"
+        elif dx < -threshold:
+            return "Left"
+    else: # This is a vertical movement
+        if dy > threshold:
+            return "Down"
+        elif dy < -threshold:
+            return "Up"
+        
+    # If none of the conditions for direction recognition
+    return None
+    
+    
 # Makes sure the form cannot be opend twice
 opened = False
 
 # Initialize the camera
 cam = cv2.VideoCapture(0)
-cam.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
 # Used for hand recog
 previous_center = None
@@ -43,10 +74,12 @@ while True:
         flipped_frame = cv2.flip(frame, 1)
         
         if opened == True:
+            
             # Used for hand tracking
-            hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+            hsv = cv2.cvtColor(flipped_frame, cv2.COLOR_BGR2HSV)
+            
             mask = cv2.inRange(hsv, lower_colour, upper_colour)
-        
+         
             # Find contours in the mask
             contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
             
@@ -57,13 +90,24 @@ while True:
                 
                 x,y,w,h = cv2.boundingRect(largest_hand)
                 
+                
                 current_center = (x + w // 2, y + h // 2) # Find the center of the hand box
                 
+                if (previous_center == None):
+                    previous_center = current_center
+                    
                 gesture = recog_gesture(previous_center,current_center)
                 
                 previous_center = current_center # Update centers to track movement
                 
-                print(gesture)
+                
+                if len(last5dir) < 5:
+                    last5dir.append(gesture)
+                else:
+                    last5dir = last5dir[1:]
+                    last5dir.append(gesture)
+                
+                print(last5dir)
                 
                 
 
@@ -147,16 +191,11 @@ while True:
                 cv2.imwrite("face_img_recent.png", face_img)
                 
                 # Open question form
-                subprocess.Popen(["streamlit", "run", "../quiz.py"])
+                #subprocess.Popen(["streamlit", "run", "../quiz.py"])
                 opened = True
             
-                # Here you can add the action you want to perform
-                # For example, you might want to move to the next question, save data, etc.
-                # You can also break the loop if you want to stop the video capture.
-                # break  # Uncomment if you want to stop the loop on Enter
-
         # Press 'q' to exit the loop
-        if cv2.waitKey(1) == ord('q'): 
+        if key == ord('q'): 
             break
     except:
         pass
