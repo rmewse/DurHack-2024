@@ -25,7 +25,7 @@ while True:
 
     # Draw rectangles around detected faces
     for (x, y, w, h) in faces:
-        cv2.rectangle(flipped_frame, (x, y), (x + w, y + h), (255, 0, 0), 2)  # Draw blue rectangle
+        cv2.rectangle(flipped_frame, (x, y), (x + w, y + h), (100,84,48), 5)  # Draw blue rectangle
 
     # Write the frame to the output file
     out.write(flipped_frame)
