@@ -10,7 +10,7 @@ import streamlit as st
 import pandas as pd
 st.write("Hello World")
 
-#@st.cache_data
+
 
 #! need to change
 def create_question_list(question_file):
@@ -18,15 +18,16 @@ def create_question_list(question_file):
     #open file in read mode
     with open(question_file,'r') as file:
         #read file in dictionary format
-        csv_reader = csv.DictReader(file, delimiter=',')
+        csv_reader = csv.DictReader(file, delimiter=';')
         for row in csv_reader:
             new_question={}
             new_question['question']=row["Question"]
             new_question['options']=row["Option A"], row["Option B"], row["Option C"], row["Option D"]
-            new_question['correct answer']=row["Answer"]
             question_data.append(new_question)
     return question_data
 
+question_file='DinoQuestions.csv'
+create_question_list(question_file)
 #!need to rewrite 
 def image(question):
     client_id = "4Vwaw-8lwS3_QfivsLzQNvWsRhKyjiTNMXsqJ2OS7ao"
@@ -84,6 +85,9 @@ def quiz_app():
             current_question=i+1
             question_content=question['question'].strip('""')
             number_placeholder.write(f"*Question {current_question}*")
-            question_placeholder.write(f"**")
+            question_placeholder.write(f"*question['question'].strip('""')*")
+            for option in question['options']:
+                options_placeholder.write(option)
+
 
 quiz_app()
