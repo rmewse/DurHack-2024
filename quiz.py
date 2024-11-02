@@ -10,7 +10,7 @@ import streamlit as st
 import pandas as pd
 st.write("Hello World")
 
-
+print('1')
 
 #! need to change
 def create_question_list(question_file):
@@ -20,14 +20,34 @@ def create_question_list(question_file):
         #read file in dictionary format
         csv_reader = csv.DictReader(file, delimiter=';')
         for row in csv_reader:
+            print("hi")
+            print(row)
             new_question={}
-            new_question['question']=row["Question"]
-            new_question['options']=row["Option A"], row["Option B"], row["Option C"], row["Option D"]
+            new_question['question']=row["Question"],
+            new_question['options']= [row["Option A"], row["Option B"], row["Option C"], row["Option D"]]
             question_data.append(new_question)
     return question_data
 
-question_file='DinoQuestions.csv'
-create_question_list(question_file)
+def c1(file_path):
+    questions = []
+    with open(file_path, 'r') as file:
+        reader = csv.DictReader(file, delimiter=';')
+        for row in reader:
+            question = {
+                'question': row['Question'],
+                'options': [
+                    row['Option A'],
+                    row['Option B'],
+                    row['Option C'],
+                    row['Option D']
+                ]
+            }
+            questions.append(question)
+    return questions
+    
+
+question_file='Assets/DinoQuestions.csv'
+question_list=c1(question_file)
 #!need to rewrite 
 def image(question):
     client_id = "4Vwaw-8lwS3_QfivsLzQNvWsRhKyjiTNMXsqJ2OS7ao"
@@ -38,7 +58,6 @@ def image(question):
     auth = Auth(client_id, client_secret, redirect_uri, code=code)
     api = Api(auth)
     import requests
-    import pygame
 
     category = str(question)
     # Fetch image data
@@ -85,9 +104,10 @@ def quiz_app():
             current_question=i+1
             question_content=question['question'].strip('""')
             number_placeholder.write(f"*Question {current_question}*")
-            question_placeholder.write(f"*question['question'].strip('""')*")
+            question_placeholder.write(f"question_content")
             for option in question['options']:
                 options_placeholder.write(option)
+            i+=1
 
 
-quiz_app()
+quiz_app(question_list)
