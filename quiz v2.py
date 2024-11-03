@@ -11,6 +11,8 @@ import time
 from Src.recognition import timer
 
 print(pygame.__version__)
+from Src import recognition
+from recognition import timer
 pygame.init()
 global screen_width, screen_height
 screen_width, screen_height=1200,700
