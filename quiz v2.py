@@ -8,6 +8,7 @@ from io import BytesIO
 import os
 import ast
 import time
+import random
 print(pygame.__version__)
 #from Src import recognition
 #from recognition import timer
@@ -191,7 +192,7 @@ def image(question):
 
 
     client_id = "4Vwaw-8lwS3_QfivsLzQNvWsRhKyjiTNMXsqJ2OS7ao"
-    client_id = "print('a',a)"
+    #client_id = "aF0DofiO3RdRi5RYss7yQyT7oxPy68ofvEa05tuj4g8"
     client_secret = ""
     redirect_uri = ""
     code = ""
@@ -381,7 +382,7 @@ def quiz():
         question_content=str(question_number) + ". " + question['question'].strip('""')
         print(question_content)
         #image credits
-        image_credit, link = image(question_content)
+        image_credit, link = image(question['question'].strip('""'))
         credit= Button(720,450, 0,0,green, image_credit,False, small_text, 'n')
         credit.draw()
         #display the question
@@ -471,7 +472,7 @@ def dinoDecide():
     global a,b,c,d
     
     #reads a random line from the text file
-    num = random.randint(0,18)
+    num = random.randint(0,10)
     with open('Assets/Affirmations.txt','r') as file:
         content = file.readlines()
         global affirmation
@@ -481,37 +482,37 @@ def dinoDecide():
     if a>b and a>c and a>d:
         global result
         result='Blue'
-        return "Assets/blue.PNG"
+        return "Assets/blue.png"
 
     #if they have answered b the most
     elif b>a and b>c and b>d:
         result='Green'
-        return "Assets/green.PNG"
+        return "Assets/green.png"
     
     #if they have answered c the most
     elif c>a and c>b and c>d:
         result='Grey'
-        return "Assets/grey.PNG"
+        return "Assets/grey.png"
 
     #if they have answered d the most
     elif d>a and d>b and d>c:
         result='Orange'
-        return "Assets/orange.PNG"
+        return "Assets/orange.png"
 
     #if they have answered a and b equally AND c and d equally
     elif a==b and c==d:
         result='Purple'
-        return "Assets/purple.PNG"
+        return "Assets/purple.png"
     
     #if they have answered a and b equally AND c and d not equally
     elif a==b and c!=d:
         result='Red'
-        return "Assets/red.PNG"
+        return "Assets/red.png"
 
     #if they have answered a and b not equally AND c and d equally
     elif a!=b and c==d:
         result='Yellow'
-        return "Assets/yellow.PNG"
+        return "Assets/yellow.png"
 
 
 
@@ -519,9 +520,8 @@ def end_screen():
     screen.fill(cream)
     image_filepath=dinoDecide()
     global affirmation
-    affirmation_button=Button(0,0,500,125,cream, affirmation,True, medium_text,'c')
+    affirmation_button=Button(0,screen_height*0.8,0,0,cream, affirmation,True, medium_text,'x')
     affirmation_button.draw()
-    result_image=pygame.image.load(image_filepath)
     dinosaur_descriptions = {
     "Red": "A burst of fiery energy, the Red Dinosaur is always ready to tackle challenges with passion and enthusiasm.",
     "Blue": "A beacon of calm, the Blue Dinosaur approaches life with thoughtful consideration and unwavering support.",
@@ -532,9 +532,16 @@ def end_screen():
     "Yellow": "A heart of gold, the Yellow Dinosaur radiates kindness and compassion, always ready to lend a helping hand."}
     global result
     result_text=dinosaur_descriptions[result]
-    result_text_button=Button(300,100,500,125,cream,result_text,True, medium_text,'x')
-
-    
+    result_text_button=Button(0,0,screen_width*0.9,screen_height*0.3,cream,result_text,True, large_text,'x')
+    result_text_button.draw()
+    image =pygame.image.load(image_filepath) 
+    result_image=pygame.transform.scale(image, (300,300))
+    screen.blit(result_image, (screen_width*0.1, screen_height*0.35))
+    pygame.display.update()
+    image2=pygame.image.load('face_img_recent.png') 
+    profile_picture=pygame.transform.scale(image2, (200,200))
+    screen.blit(profile_picture, (screen_width*0.5, screen_height*0.35))
+    pygame.display.update()
 
 
 #start screen buttons
@@ -543,7 +550,7 @@ help_button= Button((screen_width*0.80),(screen_height*0.1),0,0, green, "Help",F
 
 # background image
 screen.fill(cream)
-background=pygame.image.load("dinosaur.jpg")
+background=pygame.image.load("Assets/together.png")
 background_width,background_height=background.get_size()
 
 #Game title
