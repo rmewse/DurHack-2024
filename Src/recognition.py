@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 import subprocess # Used to run another python file
-
+import time
 
 last5dir = []
 
@@ -65,6 +65,9 @@ border_img = cv2.resize(cv2.imread("../Assets/border.png", cv2.IMREAD_UNCHANGED)
 # Load the Haar Cascade for face detection
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
+# Record the start time for the 10-second timer
+start_time = time.time()
+
 while True:
     try:
         ret, frame = cam.read()
@@ -72,6 +75,9 @@ while True:
             break
         
         flipped_frame = cv2.flip(frame, 1)
+
+        # Check if 10 seconds have passed
+        elapsed_time = time.time() - start_time
         
         if opened == True:
             
