@@ -14,6 +14,9 @@ import time
 import pygame
 import threading
 
+with open('myTextFile.txt', 'w') as file:
+    file.write("")
+    file.close()
 
 last5dir = []
 
