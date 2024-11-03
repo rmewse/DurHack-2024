@@ -1,0 +1,35 @@
+Exploration:
+- Using video capture and facial recognition
+- Using api
+- Jungle/ dinosaur theme
+- facial recognition
+- gesture recognition
+
+Mental Health
+- Motivational Quotes
+- Fun dinosaurs
+
+Hackiest Hack:
+- rgb() was inverted
+- dont know how it works
+- over the top
+- dinosaur theme
+- dinosaur Quotes
+- over engineered because of gestures
+
+Further Development: 
+- Create a hands free game
+- Make this into a local app
+- Have faster execution using multiple GPUs
+- Have a neural network when assigning dinosaurs
+- Create a bank of questions where the program would randomly pick 10 questions
+
+Images Created by Us: 
+- blue.PNG
+- border.PNG
+- green.PNG
+- grey.PNG
+- orange.PNG
+- purple.PNG
+- red.PNG
+- yellow.PNG 
