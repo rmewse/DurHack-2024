@@ -14,37 +14,37 @@ def dinoDecide(a,b,c,d):
 
     #if they have answered a the most
     if a>b and a>c and a>d:
-        print("red dino")
         print(affirmation)
+        return "Assets/blue.PNG"
 
     #if they have answered b the most
     elif b>a and b>c and b>d:
-        print("orange dino")
         print(affirmation)
+        return "Assets/green.PNG"
     
     #if they have answered c the most
     elif c>a and c>b and c>d:
-        print("yellow dino")
         print(affirmation)
+        return "Assets/grey.PNG"
 
     #if they have answered d the most
     elif d>a and d>b and d>c:
-        print("green dino")
         print(affirmation)
+        return "Assets/orange.PNG"
 
     #if they have answered a and b equally AND c and d equally
     elif a==b and c==d:
-        print("blue dino")
         print(affirmation)
+        return "Assets/purple.PNG"
     
     #if they have answered a and b equally AND c and d not equally
     elif a==b and c!=d:
-        print("purple dino")
         print(affirmation)
+        return "Assets/red.PNG"
 
     #if they have answered a and b not equally AND c and d equally
     elif a!=b and c==d:
-        print("violet dino")
         print(affirmation)
+        return "Assets/yellow.PNG"
 
-
+dinoDecide(a,b,c,d)

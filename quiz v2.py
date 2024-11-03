@@ -8,7 +8,7 @@ from io import BytesIO
 import os
 import ast
 import time
-
+from recognition import timer
 pygame.init()
 global screen_width, screen_height
 screen_width, screen_height=1200,700
@@ -366,6 +366,7 @@ def quiz():
     global question_list
     global question_number
     for question in question_list:
+        
         screen.fill(cream)
         current_question=question['question']
         answer_selected=False
@@ -381,6 +382,10 @@ def quiz():
         #display the question
         question_button=Button((screen_width*0.01), (screen_height*0.07), (screen_width),(screen_height*0.15), green, question_content,True, question_text, 'n')
         question_button.draw()
+        
+        # Call timer function
+        timer()
+        
         # for each option, print a letter and then the text
         for option in question['options']:
             letters=['UP) ','DOWN) ','LEFT) ','RIGHT) '] #ABCD respectively
@@ -423,17 +428,21 @@ def quiz():
                     # Check for mouse click within the text surface area
                     if credit.is_clicked():
                         webbrowser.open(link)
-            answer=update_answer()
+            answer=update_answer() #function, cast result to lowercase
             if answer in ['right','left','up','down']:
                 answer_selected=True
                 if answer=='up':
                     #confirm
+                    global a
                     a+=1
                 elif answer=='down':
+                    global b
                     b+=1
                 elif answer=='left':
+                    global c
                     c+=1
                 elif answer=='right':
+                    global d
                     d+=1
         if answer_selected==True:
             feedback='Great! Next Question...'

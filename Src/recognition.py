@@ -1,11 +1,43 @@
 import cv2
 import numpy as np
 import subprocess # Used to run another python file
-
+import time
 
 last5dir = []
 
-send_dir = ""
+
+def timer():
+    pass
+def recog_gesture(prev_center, cur_center):
+    
+    # Check if there is a previous center
+    if prev_center is None:
+        return None
+    
+    # Get movement of hand
+    dx = cur_center[0] - prev_center[0]
+    dy = cur_center[1] - prev_center[1]
+    
+    
+    # Threshold for the amount of pixels the hand has to move to be recognised
+    threshold = 50
+    if abs(dy) < abs(dx): # This is a horizontal movement, we need to distinguish between left/right
+        if dx > threshold:
+            return "Right"
+        elif dx < -threshold:
+            return "Left"
+    else: # This is a vertical movement
+        if dy > threshold:
+            return "Down"
+        elif dy < -threshold:
+            return "Up"
+        
+    # If none of the conditions for direction recognition
+    return none
+    
+    
+
+last5dir = []
 
 def recog_gesture(prev_center, cur_center):
     
@@ -32,7 +64,7 @@ def recog_gesture(prev_center, cur_center):
             return "Up"
         
     # If none of the conditions for direction recognition
-    return None
+    return none
     
     
 # Makes sure the form cannot be opend twice
@@ -65,6 +97,9 @@ border_img = cv2.resize(cv2.imread("../Assets/border.png", cv2.IMREAD_UNCHANGED)
 # Load the Haar Cascade for face detection
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
+# Record the start time for the 10-second timer
+start_time = time.time()
+
 while True:
     try:
         ret, frame = cam.read()
@@ -72,6 +107,9 @@ while True:
             break
         
         flipped_frame = cv2.flip(frame, 1)
+
+        # Check if 10 seconds have passed
+        elapsed_time = time.time() - start_time
         
         if opened == True:
             
@@ -108,9 +146,20 @@ while True:
                     last5dir.append(gesture)
                 
                 print(last5dir)
-                
-                
-
+                #Getting the count of each direction
+                leftCount = last5dir.count("Left")
+                rightCount = last5dir.count("Right")
+                upCount = last5dir.count("Up")
+                downCount = last5dir.count("Down")
+                # Store counts in a dictionary
+                counts = {
+                    "Left Count": leftCount,
+                    "Right Count": rightCount,
+                    "Up Count": upCount,
+                    "Down Count": downCount
+                    }
+                maxDirection = max(counts, key=counts.get)
+                print(maxDirection)
 
         # Convert the frame to grayscale for face detection
         gray = cv2.cvtColor(flipped_frame, cv2.COLOR_BGR2GRAY)
