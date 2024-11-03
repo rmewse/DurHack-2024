@@ -174,11 +174,12 @@ while True:
                 print(counter)
                 if counter > 80: 
                     break
-                if len(last5dir) < 5:
-                    last5dir.append(gesture)
-                else:
-                    last5dir = last5dir[1:]
-                    last5dir.append(gesture)
+                if gesture != None:
+                    if len(last5dir) < 5:
+                        last5dir.append(gesture)
+                    else:
+                        last5dir = last5dir[1:]
+                        last5dir.append(gesture)
                 
                 print(last5dir)
                 #Getting the count of each direction
