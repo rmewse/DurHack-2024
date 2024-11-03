@@ -428,17 +428,21 @@ def quiz():
                     # Check for mouse click within the text surface area
                     if credit.is_clicked():
                         webbrowser.open(link)
-            answer=update_answer()
+            answer=update_answer() #function, cast result to lowercase
             if answer in ['right','left','up','down']:
                 answer_selected=True
                 if answer=='up':
                     #confirm
+                    global a
                     a+=1
                 elif answer=='down':
+                    global b
                     b+=1
                 elif answer=='left':
+                    global c
                     c+=1
                 elif answer=='right':
+                    global d
                     d+=1
         if answer_selected==True:
             feedback='Great! Next Question...'
