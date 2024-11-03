@@ -7,7 +7,7 @@ last5dir = []
 
 
 def timer():
-    ####
+    pass
 def recog_gesture(prev_center, cur_center):
     
     # Check if there is a previous center
@@ -146,9 +146,20 @@ while True:
                     last5dir.append(gesture)
                 
                 print(last5dir)
-                
-                
-
+                #Getting the count of each direction
+                leftCount = last5dir.count("Left")
+                rightCount = last5dir.count("Right")
+                upCount = last5dir.count("Up")
+                downCount = last5dir.count("Down")
+                # Store counts in a dictionary
+                counts = {
+                    "Left Count": leftCount,
+                    "Right Count": rightCount,
+                    "Up Count": upCount,
+                    "Down Count": downCount
+                    }
+                maxDirection = max(counts, key=counts.get)
+                print(maxDirection)
 
         # Convert the frame to grayscale for face detection
         gray = cv2.cvtColor(flipped_frame, cv2.COLOR_BGR2GRAY)
