@@ -447,7 +447,7 @@ def quiz():
                     # Check for mouse click within the text surface area
                     if credit.is_clicked():
                         webbrowser.open(link)
-            #time.sleep(2)
+            time.sleep(5)
             answer=update_answer()
             print(answer)#function, cast result to lowercase
             if answer in ['right','left','up','down']:
