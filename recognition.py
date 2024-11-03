@@ -1,9 +1,19 @@
+import sys
+print("Python executable in quiz v2.py:", sys.executable)
+
+try:
+    import pygame
+    print("Pygame imported successfully.")
+except ImportError:
+    print("Pygame could not be imported.")
+
 import cv2
 import numpy as np
 import subprocess # Used to run another python file
 import time
 import pygame
 import threading
+
 
 last5dir = []
 
@@ -115,7 +125,7 @@ face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_fronta
 
 # Record the start time for the 10-second timer
 start_time = time.time()
-
+counter = 0
 while True:
     try:
         ret, frame = cam.read()
@@ -154,7 +164,10 @@ while True:
                 
                 previous_center = current_center # Update centers to track movement
                 
-                
+                counter = counter + 1
+                print(counter)
+                if counter > 80: 
+                    break
                 if len(last5dir) < 5:
                     last5dir.append(gesture)
                 else:
@@ -169,15 +182,18 @@ while True:
                 downCount = last5dir.count("Down")
                 # Store counts in a dictionary
                 counts = {
-                    "Left Count": leftCount,
-                    "Right Count": rightCount,
-                    "Up Count": upCount,
-                    "Down Count": downCount
+                    "Left": leftCount,
+                    "Right": rightCount,
+                    "Up": upCount,
+                    "Down": downCount
                     }
                 maxDirection = max(counts, key=counts.get)
                 current_dir = maxDirection
                 print(maxDirection)
-
+                with open('myTextFile.txt', 'w') as file:
+                    file.write(maxDirection)
+                    file.close()
+        # Overlay the border image      
         # Convert the frame to grayscale for face detection
         gray = cv2.cvtColor(flipped_frame, cv2.COLOR_BGR2GRAY)
 
@@ -257,7 +273,7 @@ while True:
                 cv2.imwrite("face_img_recent.png", face_img)
                 
                 # Open question form
-                subprocess.Popen(["python3", "quiz v2.py"])
+                subprocess.Popen([sys.executable, "quiz v2.py"])
                 opened = True
             
         # Press 'q' to exit the loop

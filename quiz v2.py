@@ -1,3 +1,13 @@
+import sys
+print("Python executable in quiz v2.py:", sys.executable)
+
+try:
+    import pygame
+    print("Pygame imported successfully.")
+except ImportError:
+    print("Pygame could not be imported.")
+
+
 import csv
 import pygame
 import webbrowser
