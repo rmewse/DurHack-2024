@@ -60,3 +60,4 @@ output_videos/
 *.csv  # Ignore data files if they are large; otherwise include them if they’re necessary
 *.pb  # Protobuf model files
 *.tfrecord
+Src/output.mp4
