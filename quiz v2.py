@@ -447,11 +447,51 @@ def quiz():
             time.sleep(2)
             answer_selected=False
             question_number+=1
+global affirmation
+affirmation=''
+def dinoDecide(a,b,c,d):
+    #reads a random line from the text file
+    num = random.randint(0,18)
+    with open('Assets/Affirmations.txt','r') as file:
+        content = file.readlines()
+        global affirmation
+        affirmation = (content[num]).strip()
+
+    #if they have answered a the most
+    if a>b and a>c and a>d:
+        return "Assets/blue.PNG"
+
+    #if they have answered b the most
+    elif b>a and b>c and b>d:
+        return "Assets/green.PNG"
+    
+    #if they have answered c the most
+    elif c>a and c>b and c>d:
+        return "Assets/grey.PNG"
+
+    #if they have answered d the most
+    elif d>a and d>b and d>c:
+        return "Assets/orange.PNG"
+
+    #if they have answered a and b equally AND c and d equally
+    elif a==b and c==d:
+        return "Assets/purple.PNG"
+    
+    #if they have answered a and b equally AND c and d not equally
+    elif a==b and c!=d:
+        return "Assets/red.PNG"
+
+    #if they have answered a and b not equally AND c and d equally
+    elif a!=b and c==d:
+        return "Assets/yellow.PNG"
+
+
 
 def end_screen():
     screen.fill(cream)
-    #image blit
-    #call affirmations
+    image_filepath=dinoDecide()
+    affirmation_button=Button(0,0,500,125,white, feedback,True, medium_text,'c')
+    affirmation_button.draw()
     
     #array of results
     #result blit
