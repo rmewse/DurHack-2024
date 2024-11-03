@@ -3,6 +3,7 @@ import numpy as np
 import subprocess # Used to run another python file
 import time
 import pygame
+import threading
 
 last5dir = []
 
@@ -49,7 +50,7 @@ def recog_gesture(prev_center, cur_center):
             return "Up"
         
     # If none of the conditions for direction recognition
-    return none
+    return None
     
     
 
@@ -80,8 +81,7 @@ def recog_gesture(prev_center, cur_center):
             return "Up"
         
     # If none of the conditions for direction recognition
-    return none
-    
+    return None
     
 # Makes sure the form cannot be opend twice
 opened = False
@@ -108,7 +108,7 @@ print(str(frame_width) + " " + str(frame_height))
 
 
 # This is the image to be overlayed onto the camera display
-border_img = cv2.resize(cv2.imread("../Assets/border.png", cv2.IMREAD_UNCHANGED),(frame_width,frame_height))
+#border_img = cv2.resize(cv2.imread("../Assets/border.png", cv2.IMREAD_UNCHANGED),(frame_width,frame_height))
 
 # Load the Haar Cascade for face detection
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
