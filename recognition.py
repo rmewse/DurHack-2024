@@ -14,6 +14,8 @@ import time
 import pygame
 import threading
 
+
+
 with open('myTextFile.txt', 'w') as file:
     file.write("")
     file.close()
@@ -129,6 +131,7 @@ face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_fronta
 # Record the start time for the 10-second timer
 start_time = time.time()
 counter = 0
+time.sleep(10)
 while True:
     try:
         ret, frame = cam.read()

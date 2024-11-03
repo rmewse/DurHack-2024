@@ -20,6 +20,7 @@ import ast
 import time
 import random
 import recognition
+import subprocess
 
 print(pygame.__version__)
 #from Src import recognition
@@ -404,7 +405,7 @@ def quiz():
         question_button=Button((screen_width*0.01), 0, (screen_width*0.6),(screen_height*0.05), cream, question_content,True, question_text, 'n')
         question_button.draw()
         
-        recognition
+        subprocess.run(["python", "recognition.py"])
         
         # for each option, print a letter and then the text
         for option in question['options']:
