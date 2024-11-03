@@ -98,13 +98,13 @@ def recog_gesture(prev_center, cur_center):
     # If none of the conditions for direction recognition
     return None
     
-# Makes sure the form cannot be opend twice
+# Makes sure the form cannot be opened twice
 opened = False
 
 # Initialize the camera
 cam = cv2.VideoCapture(0)
 
-# Used for hand recog
+# Used for hand/face recog
 previous_center = None
 
 # Define the range for hand color detection in HSV
@@ -145,11 +145,14 @@ while True:
         
         if opened == True:
             
-            # Used for hand tracking
+            # Used for hand and face tracking
             hsv = cv2.cvtColor(flipped_frame, cv2.COLOR_BGR2HSV)
             
             mask = cv2.inRange(hsv, lower_colour, upper_colour)
-         
+
+            #
+            # THE FOLLOWING CODE RECOGNISES NOT HANDS AND FACES, NOT JUST HANDS
+            #
             # Find contours in the mask
             contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
             
@@ -182,11 +185,13 @@ while True:
                         last5dir.append(gesture)
                 
                 print(last5dir)
+                
                 #Getting the count of each direction
                 leftCount = last5dir.count("Left")
                 rightCount = last5dir.count("Right")
                 upCount = last5dir.count("Up")
                 downCount = last5dir.count("Down")
+                
                 # Store counts in a dictionary
                 counts = {
                     "Left": leftCount,
@@ -200,6 +205,7 @@ while True:
                 with open('myTextFile.txt', 'w') as file:
                     file.write(maxDirection)
                     file.close()
+                    
         # Overlay the border image      
         # Convert the frame to grayscale for face detection
         gray = cv2.cvtColor(flipped_frame, cv2.COLOR_BGR2GRAY)
@@ -268,7 +274,7 @@ while True:
         # Display the captured frame with detected faces
         cv2.imshow('Camera', flipped_frame)
 
-        # Press 'Enter' key to perform an action
+        # Press 'Enter' key 
         key = cv2.waitKey(1)
         if key == 13:  # 13 is the ASCII code for Enter
             if (opened == False):
@@ -283,13 +289,14 @@ while True:
                 subprocess.Popen([sys.executable, "quiz v2.py"])
                 opened = True
             
-        # Press 'q' to exit the loop
+        # Press 'q' 
         if key == ord('q'): 
             break
     except:
         pass
 
-# Release the capture and writer objects
+
+# Exit files and all windws
 cam.release()
 out.release()
 cv2.destroyAllWindows()

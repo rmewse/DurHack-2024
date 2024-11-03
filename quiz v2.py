@@ -51,7 +51,7 @@ red=(255,0,0)
 
 # create font options
 pygame.font.init()
-#'PressStart2P-vaV7.ttf'
+
 #!change font
 small_text = pygame.font.Font('Atop-R99O3.ttf', 10)
 medium_text = pygame.font.Font('Atop-R99O3.ttf', 25)
@@ -257,7 +257,7 @@ def help_screen():
     
     #same mechanism as pause function
     help_surface=pygame.Surface((screen_width, screen_height), pygame.SRCALPHA)
-    pygame.draw.rect(help_surface,(0,0,0,0), [0,0, screen_width, screen_height]) # 4th value is opacity
+    pygame.draw.rect(help_surface,(0,0,0,0), [0,0, screen_width, screen_height]) # 4th val is opacity
     screen.blit(help_surface,(0,0))
     pygame.display.flip()
         
@@ -449,7 +449,7 @@ def quiz():
                         webbrowser.open(link)
             #time.sleep(2)
             answer=update_answer()
-            print(answer)#function, cast result to lowercase
+            print(answer)#function, cast result to lowercase, because return values are capitalised
             if answer in ['right','left','up','down']:
                 answer_selected=True
                 if answer=='up':
@@ -538,6 +538,7 @@ def end_screen():
     affirmation_button=Button(0,screen_height*0.8,0,0,cream, affirmation,True, medium_text,'x')
     affirmation_button.draw()
     dinosaur_descriptions = {
+        #lovely descriptions of each dino
     "Red": "A burst of fiery energy, the Red Dinosaur is always ready to tackle challenges with passion and enthusiasm.",
     "Blue": "A beacon of calm, the Blue Dinosaur approaches life with thoughtful consideration and unwavering support.",
     "Green": "A curious explorer, the Green Dinosaur is always seeking new adventures and knowledge with a boundless sense of wonder.",
