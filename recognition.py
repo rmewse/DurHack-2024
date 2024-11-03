@@ -124,7 +124,7 @@ face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_fronta
 
 # Record the start time for the 10-second timer
 start_time = time.time()
-
+counter = 0
 while True:
     try:
         ret, frame = cam.read()
@@ -163,7 +163,10 @@ while True:
                 
                 previous_center = current_center # Update centers to track movement
                 
-                
+                counter = counter + 1
+                print(counter)
+                if counter > 50: 
+                    break
                 if len(last5dir) < 5:
                     last5dir.append(gesture)
                 else:
