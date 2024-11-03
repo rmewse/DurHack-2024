@@ -3,8 +3,7 @@ import numpy as np
 
 # Function to recognise movement of boxes
 def recog_gesture(prev_center, cur_center):
-    """
-    """
+   
     # Check if there is a previous center
     if prev_center is None:
         return None
@@ -33,4 +32,4 @@ def recog_gesture(prev_center, cur_center):
         
     # If none of the conditions for direction recognition
     return none
-    """
+    
