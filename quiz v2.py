@@ -19,6 +19,8 @@ import os
 import ast
 import time
 import random
+import recognition
+
 print(pygame.__version__)
 #from Src import recognition
 #from recognition import timer
@@ -402,8 +404,7 @@ def quiz():
         question_button=Button((screen_width*0.01), 0, (screen_width*0.6),(screen_height*0.05), cream, question_content,True, question_text, 'n')
         question_button.draw()
         
-        # Call timer function
-        #result = timer()
+        recognition
         
         # for each option, print a letter and then the text
         for option in question['options']:
