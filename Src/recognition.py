@@ -2,12 +2,28 @@ import cv2
 import numpy as np
 import subprocess # Used to run another python file
 import time
+import pygame
 
 last5dir = []
 
+current_dir = ""
 
 def timer():
-    pass
+    return_val = ""
+    def run():
+        time.sleep(10)
+        return_val = current_dir
+        
+    thread = threading.Thread(target = run)
+    thread.start()
+    
+    sent = False
+    
+    while sent==False:
+        if return_val != "":
+            print(return_val)
+            return return_val
+    
 def recog_gesture(prev_center, cur_center):
     
     # Check if there is a previous center
@@ -159,6 +175,7 @@ while True:
                     "Down Count": downCount
                     }
                 maxDirection = max(counts, key=counts.get)
+                current_dir = maxDirection
                 print(maxDirection)
 
         # Convert the frame to grayscale for face detection
@@ -240,7 +257,7 @@ while True:
                 cv2.imwrite("face_img_recent.png", face_img)
                 
                 # Open question form
-                #subprocess.Popen(["streamlit", "run", "../quiz.py"])
+                subprocess.Popen(["python3", "../quiz v2.py"])
                 opened = True
             
         # Press 'q' to exit the loop

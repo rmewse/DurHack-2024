@@ -8,7 +8,7 @@ from io import BytesIO
 import os
 import ast
 import time
-from recognition import timer
+from Src.recognition import timer
 pygame.init()
 global screen_width, screen_height
 screen_width, screen_height=1200,700
@@ -384,7 +384,7 @@ def quiz():
         question_button.draw()
         
         # Call timer function
-        timer()
+        result = timer()
         
         # for each option, print a letter and then the text
         for option in question['options']:
