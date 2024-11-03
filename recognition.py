@@ -14,6 +14,7 @@ import time
 import pygame
 import threading
 
+
 last5dir = []
 
 current_dir = ""
@@ -165,7 +166,7 @@ while True:
                 
                 counter = counter + 1
                 print(counter)
-                if counter > 50: 
+                if counter > 80: 
                     break
                 if len(last5dir) < 5:
                     last5dir.append(gesture)
@@ -181,15 +182,18 @@ while True:
                 downCount = last5dir.count("Down")
                 # Store counts in a dictionary
                 counts = {
-                    "Left Count": leftCount,
-                    "Right Count": rightCount,
-                    "Up Count": upCount,
-                    "Down Count": downCount
+                    "Left": leftCount,
+                    "Right": rightCount,
+                    "Up": upCount,
+                    "Down": downCount
                     }
                 maxDirection = max(counts, key=counts.get)
                 current_dir = maxDirection
                 print(maxDirection)
-
+                with open('myTextFile.txt', 'w') as file:
+                    file.write(maxDirection)
+                    file.close()
+        # Overlay the border image      
         # Convert the frame to grayscale for face detection
         gray = cv2.cvtColor(flipped_frame, cv2.COLOR_BGR2GRAY)
 
