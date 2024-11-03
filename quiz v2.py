@@ -374,7 +374,10 @@ def pause_screen(pause, surface):
         pygame.display.flip()
 
 def update_answer():
-    return 'left'
+    time.sleep(10)
+    with open('myTextFile.txt', 'r') as file:
+        ans=(file.readline()).lower()
+    return ans
 
 def quiz():
     global pause
