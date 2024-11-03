@@ -191,6 +191,7 @@ def image(question):
 
 
     client_id = "4Vwaw-8lwS3_QfivsLzQNvWsRhKyjiTNMXsqJ2OS7ao"
+    client_id = "print('a',a)"
     client_secret = ""
     redirect_uri = ""
     code = ""
@@ -377,7 +378,8 @@ def quiz():
         pause_button = Button ((screen_width*0.9),(screen_height*0.02),120,100,red, "Menu",True, medium_text,'n')
         pause_button.draw()
         #question
-        question_content=str(question_number) + ". " + question['question'].strip('""')            
+        question_content=str(question_number) + ". " + question['question'].strip('""')
+        print(question_content)
         #image credits
         image_credit, link = image(question_content)
         credit= Button(720,450, 0,0,green, image_credit,False, small_text, 'n')
@@ -431,7 +433,7 @@ def quiz():
                     # Check for mouse click within the text surface area
                     if credit.is_clicked():
                         webbrowser.open(link)
-            time.sleep(2)
+            #time.sleep(2)
             answer=update_answer() #function, cast result to lowercase
             if answer in ['right','left','up','down']:
                 answer_selected=True
@@ -462,9 +464,12 @@ def quiz():
 global affirmation
 affirmation=''
 
+
 global result
 result=''
-def dinoDecide(a,b,c,d):
+def dinoDecide():
+    global a,b,c,d
+    
     #reads a random line from the text file
     num = random.randint(0,18)
     with open('Assets/Affirmations.txt','r') as file:
