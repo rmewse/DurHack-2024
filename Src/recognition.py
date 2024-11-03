@@ -5,6 +5,9 @@ import time
 
 last5dir = []
 
+
+def timer():
+    ####
 def recog_gesture(prev_center, cur_center):
     
     # Check if there is a previous center
