@@ -108,7 +108,7 @@ print(str(frame_width) + " " + str(frame_height))
 
 
 # This is the image to be overlayed onto the camera display
-#border_img = cv2.resize(cv2.imread("../Assets/border.png", cv2.IMREAD_UNCHANGED),(frame_width,frame_height))
+border_img = cv2.resize(cv2.imread("../Assets/border.png", cv2.IMREAD_UNCHANGED),(frame_width,frame_height))
 
 # Load the Haar Cascade for face detection
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
