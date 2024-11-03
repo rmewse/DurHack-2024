@@ -1,3 +1,12 @@
+import sys
+print("Python executable in quiz v2.py:", sys.executable)
+
+try:
+    import pygame
+    print("Pygame imported successfully.")
+except ImportError:
+    print("Pygame could not be imported.")
+
 import cv2
 import numpy as np
 import subprocess # Used to run another python file
@@ -257,7 +266,7 @@ while True:
                 cv2.imwrite("face_img_recent.png", face_img)
                 
                 # Open question form
-                subprocess.Popen(["python3", "quiz v2.py"])
+                subprocess.Popen([sys.executable, "quiz v2.py"])
                 opened = True
             
         # Press 'q' to exit the loop
