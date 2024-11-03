@@ -47,4 +47,4 @@ def dinoDecide(a,b,c,d):
         print(affirmation)
         return "Assets/yellow.PNG"
 
-
+dinoDecide(a,b,c,d)
