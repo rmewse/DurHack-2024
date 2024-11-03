@@ -253,4 +253,3 @@ while True:
 cam.release()
 out.release()
 cv2.destroyAllWindows()
-
