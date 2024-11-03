@@ -40,8 +40,8 @@ pygame.font.init()
 small_text = pygame.font.Font('Atop-R99O3.ttf', 10)
 medium_text = pygame.font.Font('Atop-R99O3.ttf', 25)
 large_text = pygame.font.Font('Atop-R99O3.ttf', 45)
-option_text = pygame.font.Font('Atop-R99O3.ttf', 15)
-question_text=pygame.font.Font('Atop-R99O3.ttf',20)
+option_text = pygame.font.Font('Atop-R99O3.ttf', 20)
+question_text=pygame.font.Font('Atop-R99O3.ttf',25)
 # 
 # the following 'drawText' function can be found at https://www.pygame.org/wiki/TextWrap - date of access: 02/11/2024
 # draw some text into an area of a surface
@@ -298,10 +298,10 @@ def tutorial_screen():
     titles_list=["Welcome to Affirmosaurus!"]#!
     text_list = [("Use the gestures to make your choices. But choose wisely!")]
 
-    welcome_title =Button(20,30,screen_width,screen_height*0.1,green,titles_list[screen_number] ,True, medium_text, 'x')
+    welcome_title =Button(20,30,screen_width,screen_height*0.1,cream,titles_list[screen_number] ,True, medium_text, 'x')
     welcome_title.draw()
     #welcome message
-    welcome_text= Button(50,150,screen_width-150,screen_height-150,green , text_list[screen_number],True, medium_text, 'n')
+    welcome_text= Button(50,150,screen_width-150,screen_height-150,cream , text_list[screen_number],True, medium_text, 'n')
     welcome_text.draw()
     #next button
     next_button = Button(1000,575, 150, 100, green, "Next", False, medium_text, 'n')
@@ -370,7 +370,7 @@ def quiz():
         current_question=question['question']
         answer_selected=False
         #Pause Button
-        pause_button = Button ((screen_width*0.85),(screen_height*0.02),120,100,red, "Menu",True, medium_text,'n')
+        pause_button = Button ((screen_width*0.9),(screen_height*0.02),120,100,red, "Menu",True, medium_text,'n')
         pause_button.draw()
         #question
         question_content=str(question_number) + ". " + question['question'].strip('""')            
@@ -379,23 +379,23 @@ def quiz():
         credit= Button(720,450, 0,0,green, image_credit,False, small_text, 'n')
         credit.draw()
         #display the question
-        question_button=Button((screen_width*0.01), (screen_height*0.07), (screen_width),(screen_height*0.15), green, question_content,True, question_text, 'n')
+        question_button=Button((screen_width*0.01), 0, (screen_width*0.6),(screen_height*0.05), cream, question_content,True, question_text, 'n')
         question_button.draw()
         # for each option, print a letter and then the text
         for option in question['options']:
             letters=['UP) ','DOWN) ','LEFT) ','RIGHT) '] #ABCD respectively
             #draw option buttons
             if question['options'].index(option)==0: #if this is the first option in the list, since lists in python are zero-indexed
-                option_a=Button((screen_width*0.035),(screen_height*0.65),660, 60,green,letters[question['options'].index(option)]+option.strip('"'),True, option_text,'n')
+                option_a=Button((screen_width*0.035),(screen_height*0.65),600, 60,green,letters[question['options'].index(option)]+option.strip('"'),True, option_text,'n')
                 option_a.draw()
             elif question['options'].index(option)==1:
-                option_b=Button((screen_width*0.035),(screen_height*0.74),660,60,green, letters[question['options'].index(option)]+option.strip('"'),True, option_text,'n')
+                option_b=Button((screen_width*0.035),(screen_height*0.74),600,60,green, letters[question['options'].index(option)]+option.strip('"'),True, option_text,'n')
                 option_b.draw()
             elif question['options'].index(option)==2:
-                option_c=Button((screen_width*0.035),(screen_height*0.83),660,60,green, letters[question['options'].index(option)]+option.strip('"'),True, option_text,'n')
+                option_c=Button((screen_width*0.035),(screen_height*0.83),600,60,green, letters[question['options'].index(option)]+option.strip('"'),True, option_text,'n')
                 option_c.draw()
             elif question['options'].index(option)==3:
-                option_d=Button((screen_width*0.035),(screen_height*0.92),660,60,green,letters[question['options'].index(option)]+option.strip('"'),True, option_text,'n')
+                option_d=Button((screen_width*0.035),(screen_height*0.92),600,60,green,letters[question['options'].index(option)]+option.strip('"'),True, option_text,'n')
                 option_d.draw()
             #needed for pause function
             screen_surface = pygame.display.get_surface()
@@ -449,6 +449,9 @@ def quiz():
             question_number+=1
 global affirmation
 affirmation=''
+
+global result
+result=''
 def dinoDecide(a,b,c,d):
     #reads a random line from the text file
     num = random.randint(0,18)
@@ -459,30 +462,38 @@ def dinoDecide(a,b,c,d):
 
     #if they have answered a the most
     if a>b and a>c and a>d:
+        global result
+        result='Blue'
         return "Assets/blue.PNG"
 
     #if they have answered b the most
     elif b>a and b>c and b>d:
+        result='Green'
         return "Assets/green.PNG"
     
     #if they have answered c the most
     elif c>a and c>b and c>d:
+        result='Grey'
         return "Assets/grey.PNG"
 
     #if they have answered d the most
     elif d>a and d>b and d>c:
+        result='Orange'
         return "Assets/orange.PNG"
 
     #if they have answered a and b equally AND c and d equally
     elif a==b and c==d:
+        result='Purple'
         return "Assets/purple.PNG"
     
     #if they have answered a and b equally AND c and d not equally
     elif a==b and c!=d:
+        result='Red'
         return "Assets/red.PNG"
 
     #if they have answered a and b not equally AND c and d equally
     elif a!=b and c==d:
+        result='Yellow'
         return "Assets/yellow.PNG"
 
 
@@ -490,12 +501,22 @@ def dinoDecide(a,b,c,d):
 def end_screen():
     screen.fill(cream)
     image_filepath=dinoDecide()
-    affirmation_button=Button(0,0,500,125,white, feedback,True, medium_text,'c')
+    global affirmation
+    affirmation_button=Button(0,0,500,125,cream, affirmation,True, medium_text,'c')
     affirmation_button.draw()
-    
-    #array of results
-    #result blit
-    #music
+    result_image=pygame.image.load(image_filepath)
+    dinosaur_descriptions = {
+    "Red": "A burst of fiery energy, the Red Dinosaur is always ready to tackle challenges with passion and enthusiasm.",
+    "Blue": "A beacon of calm, the Blue Dinosaur approaches life with thoughtful consideration and unwavering support.",
+    "Green": "A curious explorer, the Green Dinosaur is always seeking new adventures and knowledge with a boundless sense of wonder.",
+    "Grey": "A master of organization, the Grey Dinosaur brings structure and efficiency to any situation, always finding practical solutions.",
+    "Orange": "A ray of sunshine, the Orange Dinosaur spreads joy and optimism wherever they go, inspiring others with their positive energy.",
+    "Purple": "A dreamer extraordinaire, the Purple Dinosaur paints the world with vibrant imagination and creative flair.",
+    "Yellow": "A heart of gold, the Yellow Dinosaur radiates kindness and compassion, always ready to lend a helping hand."}
+    global result
+    result_text=dinosaur_descriptions[result]
+    result_text_button=Button(300,100,500,125,cream,result_text,True, medium_text,'x')
+
     
 
 
@@ -537,4 +558,5 @@ while running:
             elif new_game_button.is_clicked():
                 tutorial_screen()
                 quiz()
+                end_screen()
     
