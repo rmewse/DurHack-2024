@@ -377,7 +377,7 @@ def pause_screen(pause, surface):
         pygame.display.flip()
 
 def update_answer():
-    time.sleep(10)
+    #time.sleep(10)
     with open('myTextFile.txt', 'r') as file:
         ans=(file.readline()).lower()
     return ans
@@ -404,8 +404,6 @@ def quiz():
         #display the question
         question_button=Button((screen_width*0.01), 0, (screen_width*0.6),(screen_height*0.05), cream, question_content,True, question_text, 'n')
         question_button.draw()
-        
-        subprocess.run(["python", "recognition.py"])
         
         # for each option, print a letter and then the text
         for option in question['options']:
@@ -450,7 +448,8 @@ def quiz():
                     if credit.is_clicked():
                         webbrowser.open(link)
             #time.sleep(2)
-            answer=update_answer() #function, cast result to lowercase
+            answer=update_answer()
+            print(answer)#function, cast result to lowercase
             if answer in ['right','left','up','down']:
                 answer_selected=True
                 if answer=='up':
@@ -470,11 +469,12 @@ def quiz():
                     global d
                     d+=1
         if answer_selected==True:
+            time.sleep(2)
             feedback='Great! Next Question...'
             feedback_display= Button(0,0,500,125,green, feedback,True, medium_text,'c')
             feedback_display.draw()
             pygame.display.flip()
-            time.sleep(2)
+            time.sleep(5)
             answer_selected=False
             question_number+=1
 global affirmation
