@@ -362,9 +362,10 @@ def pause_screen(pause, surface):
         pygame.display.flip()
 
 def update_answer():
-    pass
+    return 'left'
 
 def quiz():
+    global pause
     global question_list
     global question_number
     for question in question_list:
@@ -430,6 +431,7 @@ def quiz():
                     # Check for mouse click within the text surface area
                     if credit.is_clicked():
                         webbrowser.open(link)
+            time.sleep(2)
             answer=update_answer() #function, cast result to lowercase
             if answer in ['right','left','up','down']:
                 answer_selected=True
@@ -437,18 +439,21 @@ def quiz():
                     #confirm
                     global a
                     a+=1
+                    print('a',a)
                 elif answer=='down':
                     global b
                     b+=1
+                    print('b',b)
                 elif answer=='left':
                     global c
                     c+=1
+                    print('c',c)
                 elif answer=='right':
                     global d
                     d+=1
         if answer_selected==True:
             feedback='Great! Next Question...'
-            feedback_display= Button(0,0,500,125,white, feedback,True, medium_text,'c')
+            feedback_display= Button(0,0,500,125,green, feedback,True, medium_text,'c')
             feedback_display.draw()
             pygame.display.flip()
             time.sleep(2)
