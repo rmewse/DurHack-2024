@@ -7,7 +7,7 @@ d = int(input("Input d"))
 
 def dinoDecide(a,b,c,d):
     #reads a random line from the text file
-    num = random.randint(0,7)
+    num = random.randint(0,18)
     with open('Assets/Affirmations.txt','r') as file:
         content = file.readlines()
         affirmation = (content[num]).strip()
