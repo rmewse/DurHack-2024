@@ -204,8 +204,8 @@ class Button(object):
 def image(question):
 
 
-    client_id = "4Vwaw-8lwS3_QfivsLzQNvWsRhKyjiTNMXsqJ2OS7ao"
-    #client_id = "aF0DofiO3RdRi5RYss7yQyT7oxPy68ofvEa05tuj4g8"
+    #client_id = "4Vwaw-8lwS3_QfivsLzQNvWsRhKyjiTNMXsqJ2OS7ao"
+    client_id = "aF0DofiO3RdRi5RYss7yQyT7oxPy68ofvEa05tuj4g8"
     client_secret = ""
     redirect_uri = ""
     code = ""
@@ -217,7 +217,7 @@ def image(question):
 
     category = str(question)
     # Fetch image data
-    url = f"https://api.unsplash.com/photos/random?query={category}&orientation=landscape&client_id=4Vwaw-8lwS3_QfivsLzQNvWsRhKyjiTNMXsqJ2OS7ao"
+    url = f"https://api.unsplash.com/photos/random?query={category}&orientation=landscape&client_id=aF0DofiO3RdRi5RYss7yQyT7oxPy68ofvEa05tuj4g8"
     data = requests.get(url).json()
     img_data = requests.get(data["urls"]["regular"]).content
     
