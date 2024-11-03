@@ -1,4 +1,4 @@
-# Affirasaurus
+# Affirmasaurus
 What it does
 - Solves the problem of Mental Health
 - This does Facial Recognition of the user
