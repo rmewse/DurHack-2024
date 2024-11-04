@@ -181,7 +181,6 @@ while True:
                         last5dir = last5dir[1:]
                         last5dir.append(gesture)
                 
-                print(last5dir)
                 #Getting the count of each direction
                 leftCount = last5dir.count("Left")
                 rightCount = last5dir.count("Right")
@@ -196,7 +195,6 @@ while True:
                     }
                 maxDirection = max(counts, key=counts.get)
                 current_dir = maxDirection
-                print(maxDirection)
                 with open('myTextFile.txt', 'w') as file:
                     file.write(maxDirection)
                     file.close()
