@@ -447,7 +447,7 @@ def quiz():
                     # Check for mouse click within the text surface area
                     if credit.is_clicked():
                         webbrowser.open(link)
-            #time.sleep(2)
+            time.sleep(2)
             answer=update_answer()
             print(answer)#function, cast result to lowercase, because return values are capitalised
             if answer in ['right','left','up','down']:
@@ -469,12 +469,12 @@ def quiz():
                     global d
                     d+=1
         if answer_selected==True:
-            time.sleep(2)
+            time.sleep(3)
             feedback='Great! Next Question...'
             feedback_display= Button(0,0,500,125,green, feedback,True, medium_text,'c')
             feedback_display.draw()
             pygame.display.flip()
-            time.sleep(5)
+            time.sleep(2)
             answer_selected=False
             question_number+=1
 global affirmation
