@@ -469,7 +469,7 @@ def quiz():
                     global d
                     d+=1
         if answer_selected==True:
-            time.sleep(3)
+            time.sleep(2)
             feedback='Great! Next Question...'
             feedback_display= Button(0,0,500,125,green, feedback,True, medium_text,'c')
             feedback_display.draw()
